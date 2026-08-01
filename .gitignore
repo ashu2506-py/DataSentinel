@@ -1,0 +1,38 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VS Code
+.vscode/
+
+# Environment Variables
+.env
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type Checking
+.mypy_cache/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Reports
+reports/html/*
+reports/pdf/*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
