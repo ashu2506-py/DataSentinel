@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>DataSentinel Report</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            margin:40px;
+            background:#f8f9fa;
+        }
+
+        h1{
+            color:#1565c0;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        th,td{
+            border:1px solid #ddd;
+            padding:10px;
+        }
+
+        th{
+            background:#1565c0;
+            color:white;
+        }
+
+        tr:nth-child(even){
+            background:#eeeeee;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>DataSentinel Report</h1>
+
+<h2>Validation Results</h2>
+
+<table>
+
+<tr>
+
+<th>Rule</th>
+
+<th>Column</th>
+
+<th>Status</th>
+
+<th>Violations</th>
+
+</tr>
+
+{% for result in validation %}
+
+<tr>
+
+<td>{{result.rule}}</td>
+
+<td>{{result.column}}</td>
+
+<td>{{result.passed}}</td>
+
+<td>{{result.violations}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<h2>Schema Drift</h2>
+
+<pre>
+
+{{schema}}
+
+</pre>
+
+<h2>Anomaly Detection</h2>
+
+<pre>
+
+{{anomaly}}
+
+</pre>
+
+</body>
+
+</html>

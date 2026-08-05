@@ -2,7 +2,7 @@ import pandas as pd
 
 from datasentinel.models.rule import Rule
 from datasentinel.rules.base import BaseRule
-
+from datasentinel.models.result import ValidationResult
 
 class RegexRule(BaseRule):
 
@@ -18,9 +18,9 @@ class RegexRule(BaseRule):
 
         invalid = (~valid).sum()
 
-        return {
-            "rule": "regex_check",
-            "column": rule.column,
-            "passed": invalid == 0,
-            "violations": int(invalid)
-        }
+        return ValidationResult(
+            rule="regex_check",
+            column=rule.column,
+            passed=(invalid == 0),
+            violations=int(invalid),
+        )

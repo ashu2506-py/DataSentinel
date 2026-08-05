@@ -18,22 +18,36 @@ class RuleExecutor:
         }
 
     def execute(
-        self,
-        dataframe,
-        rules,
-    ):
+            self,
+            dataframe,
+            rules,
+        ):
 
-        results = []
+            results = []
 
-        for rule in rules:
+            for rule in rules:
 
-            validator = self.validators[rule.rule_type]
+                if rule.column not in dataframe.columns:
 
-            results.append(
-                validator.validate(
-                    dataframe,
-                    rule,
+                    results.append(
+                        {
+                            "rule": rule.rule_type,
+                            "column": rule.column,
+                            "passed": False,
+                            "violations": 0,
+                            "error": f"Column '{rule.column}' not found."
+                        }
+                    )
+
+                    continue
+
+                validator = self.validators[rule.rule_type]
+
+                results.append(
+                    validator.validate(
+                        dataframe,
+                        rule,
+                    )
                 )
-            )
 
-        return results
+            return results

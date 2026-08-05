@@ -1,37 +1,65 @@
-import pandas as pd
+from datasentinel.reports.html_report import HTMLReport
+from datasentinel.reports.pdf_report import PDFReport
+validation = [
 
-from datasentinel.anomaly.detector import AnomalyDetector
-
-
-df = pd.DataFrame(
     {
-        "salary": [
-            45000,
-            47000,
-            49000,
-            51000,
-            53000,
-            55000,
-            900000,
-        ],
-        "age": [
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            120,
-        ],
+        "rule":"null_check",
+        "column":"name",
+        "passed":False,
+        "violations":1
+    },
+
+    {
+        "rule":"unique_check",
+        "column":"id",
+        "passed":False,
+        "violations":1
+    },
+
+]
+
+schema = {
+
+    "added":["salary"],
+
+    "removed":["age"],
+
+    "changed":[]
+
+}
+
+anomaly = [
+
+    {
+
+        "method":"iqr",
+
+        "column":"salary",
+
+        "count":1
+
     }
+
+]
+
+report = HTMLReport()
+
+path = report.generate(
+
+    validation,
+
+    schema,
+
+    anomaly,
+
+)
+pdf = PDFReport.generate(
+    validation,
+    schema,
+    anomaly,
 )
 
-detector = AnomalyDetector()
 
-results = detector.detect(
-    df,
-    ["salary", "age"],
-)
 
-for result in results:
-    print(result)
+print(pdf)
+print(path)
