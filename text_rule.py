@@ -1,33 +1,39 @@
 import pandas as pd
 
-from datasentinel.rules.loader import RuleLoader
-from datasentinel.rules.executor import RuleExecutor
+from datasentinel.schema.fingerprint import SchemaFingerprint
+from datasentinel.schema.drift_detector import DriftDetector
 
-
-df = pd.DataFrame(
+baseline = pd.DataFrame(
     {
-        "id": [1, 2, 2, 4],
-        "name": ["Alice", None, "Charlie", "David"],
-        "age": [25, 150, 30, 15],
-        "email": [
-            "alice@gmail.com",
-            "wrong-email",
-            "charlie@gmail.com",
-            "david@gmail.com",
-        ],
+        "id": [1],
+        "name": ["Alice"],
+        "age": [25],
     }
 )
 
-rules = RuleLoader.load(
-    "configs/rules.yaml"
+current = pd.DataFrame(
+    {
+        "id": [1],
+        "name": ["Alice"],
+        "salary": [50000],
+    }
 )
 
-executor = RuleExecutor()
+fingerprint = SchemaFingerprint()
 
-results = executor.execute(
-    df,
-    rules,
+baseline_schema = fingerprint.generate(baseline)
+
+fingerprint.save(baseline_schema)
+
+old = fingerprint.load()
+
+current_schema = fingerprint.generate(current)
+
+detector = DriftDetector()
+
+result = detector.compare(
+    old,
+    current_schema,
 )
 
-for result in results:
-    print(result)
+print(result)
