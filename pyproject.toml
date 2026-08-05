@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datasentinel"
+version = "0.1.0"
+description = "Automated Data Quality & Pipeline Monitoring Platform"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Ashutosh Singh" }
+]
+
+dependencies = [
+    "typer>=0.16.0",
+    "rich>=14.0.0",
+    "pandas>=2.2.0"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+datasentinel = "datasentinel.cli.main:app"
