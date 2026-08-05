@@ -1,24 +1,33 @@
 import pandas as pd
 
-from datasentinel.models.rule import Rule
-from datasentinel.rules.null_rule import NullRule
+from datasentinel.rules.loader import RuleLoader
+from datasentinel.rules.executor import RuleExecutor
 
 
 df = pd.DataFrame(
     {
-        "name": ["Alice", "Bob", None, "David"],
-        "age": [20, 21, 22, 23],
+        "id": [1, 2, 2, 4],
+        "name": ["Alice", None, "Charlie", "David"],
+        "age": [25, 150, 30, 15],
+        "email": [
+            "alice@gmail.com",
+            "wrong-email",
+            "charlie@gmail.com",
+            "david@gmail.com",
+        ],
     }
 )
 
-rule = Rule(
-    column="name",
-    rule_type="null_check",
-    parameters={}
+rules = RuleLoader.load(
+    "configs/rules.yaml"
 )
 
-validator = NullRule()
+executor = RuleExecutor()
 
-result = validator.validate(df, rule)
+results = executor.execute(
+    df,
+    rules,
+)
 
-print(result)
+for result in results:
+    print(result)

@@ -1,0 +1,16 @@
+rules:
+
+  - column: name
+    type: null_check
+
+  - column: id
+    type: unique_check
+
+  - column: age
+    type: range
+    min: 18
+    max: 60
+
+  - column: email
+    type: regex
+    pattern: "^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$"
