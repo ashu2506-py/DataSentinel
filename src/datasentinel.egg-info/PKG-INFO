@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: datasentinel
+Version: 0.1.0
+Summary: Automated Data Quality & Pipeline Monitoring Platform
+Author: Ashutosh Singh
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: typer>=0.16.0
+Requires-Dist: rich>=14.0.0
+Requires-Dist: pandas>=2.2.0
+
+# DataSentinel
+
+Automated Data Quality & Pipeline Monitoring Platform
+
+Built using Python.

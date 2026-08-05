@@ -32,6 +32,6 @@ class ZScoreDetector(BaseAnomalyDetector):
         return {
             "method": "zscore",
             "column": column,
-            "count": len(outliers),
+            "count": int(len(outliers)),
             "outliers": outliers.to_dict(orient="records"),
         }

@@ -1,65 +1,8 @@
-from datasentinel.reports.html_report import HTMLReport
-from datasentinel.reports.pdf_report import PDFReport
-validation = [
+from datasentinel.database.database import Base
+from datasentinel.database.database import engine
 
-    {
-        "rule":"null_check",
-        "column":"name",
-        "passed":False,
-        "violations":1
-    },
+from datasentinel.database import models
 
-    {
-        "rule":"unique_check",
-        "column":"id",
-        "passed":False,
-        "violations":1
-    },
+Base.metadata.create_all(engine)
 
-]
-
-schema = {
-
-    "added":["salary"],
-
-    "removed":["age"],
-
-    "changed":[]
-
-}
-
-anomaly = [
-
-    {
-
-        "method":"iqr",
-
-        "column":"salary",
-
-        "count":1
-
-    }
-
-]
-
-report = HTMLReport()
-
-path = report.generate(
-
-    validation,
-
-    schema,
-
-    anomaly,
-
-)
-pdf = PDFReport.generate(
-    validation,
-    schema,
-    anomaly,
-)
-
-
-
-print(pdf)
-print(path)
+print("Database Created Successfully")

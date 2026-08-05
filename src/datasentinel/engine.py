@@ -8,12 +8,16 @@ from datasentinel.schema.drift_detector import DriftDetector
 from datasentinel.anomaly.detector import AnomalyDetector
 from datasentinel.reports.html_report import HTMLReport
 from datasentinel.reports.pdf_report import PDFReport
+from datasentinel.database.repository import ValidationRepository
+from datasentinel.alerts.email_alert import EmailSender
+from dataclasses import asdict
+from dotenv import load_dotenv
 
-
+load_dotenv()
 class DataSentinelEngine:
 
     def __init__(self):
-
+        
         self.rule_loader = RuleLoader()
         self.rule_executor = RuleExecutor()
 
@@ -25,6 +29,8 @@ class DataSentinelEngine:
         self.html = HTMLReport()
 
         self.pdf = PDFReport()
+        self.repository = ValidationRepository()
+        self.email = EmailSender()
 
     def run(
         self,
@@ -91,6 +97,30 @@ class DataSentinelEngine:
             validation,
             schema_result,
             anomaly_result,
+        )
+        
+        validation_json = [v.to_dict() for v in validation]
+
+        self.repository.save(
+
+            source_path,
+
+            validation_json,
+
+            schema_result,
+
+            anomaly_result,
+
+            html,
+
+            pdf,
+
+        )
+        self.email.send(
+            receiver="codewithcodex2106@gmail.com",
+            subject="DataSentinel Validation Report",
+            body="Validation completed successfully. Please find the attached PDF report.",
+            attachment=pdf,
         )
 
         return {

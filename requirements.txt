@@ -52,3 +52,4 @@ hypothesis>=6.138.0
 mypy>=1.17.0
 types-PyYAML
 reportlab
+python-dotenv>=1.1.0

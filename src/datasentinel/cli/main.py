@@ -1,6 +1,7 @@
 import typer
 
 from datasentinel.engine import DataSentinelEngine
+from datasentinel.utils.console import show_summary
 
 app = typer.Typer(
     help="DataSentinel - Automated Data Quality & Pipeline Monitoring Platform"
@@ -21,9 +22,7 @@ def validate(
         rules,
     )
 
-    typer.echo("\nValidation Completed")
-    typer.echo(f"HTML Report : {result['html']}")
-    typer.echo(f"PDF Report  : {result['pdf']}")
+    show_summary(result)
 
 
 @app.command()

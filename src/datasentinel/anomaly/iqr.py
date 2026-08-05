@@ -27,6 +27,6 @@ class IQRDetector(BaseAnomalyDetector):
         return {
             "method": "iqr",
             "column": column,
-            "count": len(outliers),
+            "count": int(len(outliers)),
             "outliers": outliers.to_dict(orient="records"),
         }
