@@ -10,6 +10,7 @@ from datasentinel.reports.html_report import HTMLReport
 from datasentinel.reports.pdf_report import PDFReport
 from datasentinel.database.repository import ValidationRepository
 from datasentinel.alerts.email_alert import EmailSender
+from datasentinel.alerts.slack_alert import SlackSender
 from dataclasses import asdict
 from dotenv import load_dotenv
 
@@ -31,6 +32,7 @@ class DataSentinelEngine:
         self.pdf = PDFReport()
         self.repository = ValidationRepository()
         self.email = EmailSender()
+        self.slack = SlackSender()
 
     def run(
         self,
@@ -121,6 +123,33 @@ class DataSentinelEngine:
             subject="DataSentinel Validation Report",
             body="Validation completed successfully. Please find the attached PDF report.",
             attachment=pdf,
+        )
+        passed = sum(
+            1 for item in validation
+            if item.passed
+        )
+
+        failed = len(validation) - passed
+
+        anomalies = sum(
+            item["count"]
+            for item in anomaly_result
+        )
+
+        self.slack.send(
+
+            dataset=source_path,
+
+            passed=passed,
+
+            failed=failed,
+
+            anomalies=anomalies,
+
+            html=html,
+
+            pdf=pdf,
+
         )
 
         return {

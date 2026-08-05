@@ -10,6 +10,7 @@ class ValidationRepository:
         self.session = SessionLocal()
 
     def save(
+        
         self,
         dataset,
         validation,
@@ -18,6 +19,7 @@ class ValidationRepository:
         html,
         pdf,
     ):
+        print("Saving validation run to database...")
         # Convert to plain JSON-compatible Python objects
         validation = json.loads(json.dumps(validation))
         schema = json.loads(json.dumps(schema))
@@ -34,5 +36,6 @@ class ValidationRepository:
 
         self.session.add(run)
         self.session.commit()
+        print("Saved successfully!")
 
         return run.id

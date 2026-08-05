@@ -2,7 +2,7 @@ import typer
 
 from datasentinel.engine import DataSentinelEngine
 from datasentinel.utils.console import show_summary
-
+from datasentinel.scheduler.scheduler import ValidationScheduler
 app = typer.Typer(
     help="DataSentinel - Automated Data Quality & Pipeline Monitoring Platform"
 )
@@ -48,6 +48,21 @@ def schedule():
     """Schedule validation."""
     typer.echo("Schedule command")
 
+@app.command()
+def schedule(
+    source_type: str,
+    source_path: str,
+    rules: str,
+    interval: int = 60,
+):
 
+    scheduler = ValidationScheduler()
+
+    scheduler.schedule_validation(
+        source_type,
+        source_path,
+        rules,
+        interval,
+    )
 if __name__ == "__main__":
     app()
