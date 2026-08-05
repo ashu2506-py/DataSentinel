@@ -1,39 +1,37 @@
 import pandas as pd
 
-from datasentinel.schema.fingerprint import SchemaFingerprint
-from datasentinel.schema.drift_detector import DriftDetector
+from datasentinel.anomaly.detector import AnomalyDetector
 
-baseline = pd.DataFrame(
+
+df = pd.DataFrame(
     {
-        "id": [1],
-        "name": ["Alice"],
-        "age": [25],
+        "salary": [
+            45000,
+            47000,
+            49000,
+            51000,
+            53000,
+            55000,
+            900000,
+        ],
+        "age": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            120,
+        ],
     }
 )
 
-current = pd.DataFrame(
-    {
-        "id": [1],
-        "name": ["Alice"],
-        "salary": [50000],
-    }
+detector = AnomalyDetector()
+
+results = detector.detect(
+    df,
+    ["salary", "age"],
 )
 
-fingerprint = SchemaFingerprint()
-
-baseline_schema = fingerprint.generate(baseline)
-
-fingerprint.save(baseline_schema)
-
-old = fingerprint.load()
-
-current_schema = fingerprint.generate(current)
-
-detector = DriftDetector()
-
-result = detector.compare(
-    old,
-    current_schema,
-)
-
-print(result)
+for result in results:
+    print(result)
