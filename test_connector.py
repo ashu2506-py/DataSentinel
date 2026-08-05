@@ -1,11 +1,15 @@
-from datasentinel.connectors.csv_connector import CSVConnector
+from datasentinel.connectors.factory import ConnectorFactory
 
-connector = CSVConnector("data/sample/employees.csv")
+
+connector = ConnectorFactory.create(
+    "csv",
+    "data/sample/employees.csv"
+)
 
 connector.connect()
 
 df = connector.load()
 
-print(df.head())
+print(df)
 
 connector.disconnect()
