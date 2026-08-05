@@ -1,9 +1,11 @@
 from datasentinel.connectors.factory import ConnectorFactory
+import os
 
-
+print("Current Working Directory:", os.getcwd())
+print("File Exists:", os.path.exists("data/sample/employees.xlsx"))
 connector = ConnectorFactory.create(
-    "csv",
-    "data/sample/employees.csv"
+    "excel",
+    "data/sample/employees.xlsx"
 )
 
 connector.connect()

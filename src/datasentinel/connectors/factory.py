@@ -2,6 +2,7 @@ from typing import Any
 
 from datasentinel.connectors.base import BaseConnector
 from datasentinel.connectors.csv_connector import CSVConnector
+from datasentinel.connectors.excel_connector import ExcelConnector
 
 
 class ConnectorFactory:
@@ -11,6 +12,7 @@ class ConnectorFactory:
 
     _connectors = {
         "csv": CSVConnector,
+        "excel":ExcelConnector,
     }
 
     @classmethod
